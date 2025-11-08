@@ -1,0 +1,20 @@
+[package]
+name = "perpl_utilities"
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+keywords.workspace = true
+description.workspace = true
+repository.workspace = true
+license.workspace = true
+
+[dependencies]
+dex-sdk = { workspace = true }
+fastnum = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[[bin]]
+name = "perpl_test_exchange"
+path = "src/test-exchange.rs"

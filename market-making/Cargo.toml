@@ -1,0 +1,32 @@
+[package]
+name = "perpl_market_making_bot"
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+keywords.workspace = true
+description.workspace = true
+repository.workspace = true
+license.workspace = true
+
+[dependencies]
+alloy = { workspace = true }
+clap = { workspace = true }
+dex-sdk = { workspace = true }
+dotenvy = { workspace = true }
+envy = { workspace = true }
+fastnum = { workspace = true }
+futures = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+url = { workspace = true }
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "perpl_market_making_bot"
+path = "src/bin/main.rs"
