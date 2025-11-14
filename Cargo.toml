@@ -4,7 +4,7 @@ version = "0.1.0"
 publish = false
 keywords = ["aionex", "sdk", "examples"]
 description = "Examples for using the Aionex SDK"
-repository = "https://github.com/AionexTech/dex-sdk-examples"
+repository = "https://github.com/PerplFoundation/dex-sdk-examples"
 license = "MIT"
 
 [workspace]
