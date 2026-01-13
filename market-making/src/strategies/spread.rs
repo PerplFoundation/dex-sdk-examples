@@ -1,12 +1,12 @@
 use crate::{Result, error::Error, strategies::Strategy};
 use alloy::providers::DynProvider;
-use dex_sdk::{
+use fastnum::{UD64, udec64};
+use perpl_sdk::{
     abi::dex::Exchange::{ExchangeInstance, OrderDesc},
     error::DexError,
     state::{Exchange, Order, StateEvents},
     types::{AccountId, OrderRequest, OrderType, PerpetualId, RequestType},
 };
-use fastnum::{UD64, udec64};
 use std::{
     collections::{HashMap, HashSet},
     sync::OnceLock,
@@ -84,7 +84,7 @@ impl Strategy for SpreadStrategy {
             .perpetuals()
             .get(&self.perpetual_id)
             .unwrap()
-            .l2_book();
+            .l3_book();
 
         info!("{:#?}", book);
 
@@ -263,9 +263,11 @@ impl SpreadStrategy {
             .perpetuals()
             .get(&self.perpetual_id)
             .unwrap()
-            .orders()
+            .l3_book()
+            .all_orders()
             .values()
             .filter(|o| o.account_id() == *account_id)
+            .map(|o| &*(*o))
             .collect()
     }
 

@@ -1,5 +1,9 @@
-use dex_sdk::testing::TestExchange;
+//! Starts local Anvil instance with Perpl exchange and test accounts configured.
+//!
+//! Run with: cargo run --bin print_trades
+
 use fastnum::UD64;
+use perpl_sdk::testing::TestExchange;
 use tokio::signal::unix::{SignalKind, signal};
 use tracing::{info, warn};
 
@@ -42,8 +46,13 @@ async fn main() {
             tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
             let price: u32 = 100_000 + ((iteration % 5) * 10_000);
             let price = UD64::from_u32(price);
-            info!(%price, "Updated BTC perpetual index price");
-            btc_perp.set_index_price(price).await;
+            info!(%price, "Updated BTC perpetual mark price");
+            btc_perp
+                .set_mark_price(price)
+                .await
+                .get_receipt()
+                .await
+                .unwrap();
             iteration += 1;
         }
     });

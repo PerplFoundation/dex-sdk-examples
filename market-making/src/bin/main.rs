@@ -1,11 +1,11 @@
 use alloy::{network::EthereumWallet, primitives::Address, signers::local::PrivateKeySigner};
 use clap::Parser;
-use dex_sdk::Chain;
 use fastnum::{UD64, decimal::Context};
 use perpl_market_making_bot::{
     PerplMarketMakingBot,
     strategies::{StrategyType, bbo::BboStrategy, spread::SpreadStrategy, taker::TakerStrategy},
 };
+use perpl_sdk::Chain;
 use std::{process::exit, time::Duration};
 use tracing::error;
 use url::Url;

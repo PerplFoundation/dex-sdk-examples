@@ -11,7 +11,7 @@ license.workspace = true
 [dependencies]
 alloy = { workspace = true }
 clap = { workspace = true }
-dex-sdk = { workspace = true }
+perpl-sdk = { workspace = true }
 dotenvy = { workspace = true }
 envy = { workspace = true }
 fastnum = { workspace = true }

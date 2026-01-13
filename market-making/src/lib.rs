@@ -4,8 +4,10 @@ use alloy::{
     providers::{DynProvider, ProviderBuilder},
     rpc::client::RpcClient,
 };
-use dex_sdk::{Chain, abi::dex::Exchange::ExchangeInstance, state::SnapshotBuilder, stream};
 use futures::StreamExt;
+use perpl_sdk::{
+    Chain, abi::dex::Exchange::ExchangeInstance, state::SnapshotBuilder, stream, types,
+};
 use std::{pin::pin, sync::Arc, time::Duration};
 use tracing::{error, info, warn};
 use url::Url;
@@ -20,7 +22,7 @@ pub type Result<T> = std::result::Result<T, error::Error>;
 #[derive(Debug)]
 pub struct PerplMarketMakingBot {
     provider: DynProvider,
-    accounts: Vec<Address>,
+    accounts: Vec<types::AccountAddressOrID>,
     instance: ExchangeInstance<DynProvider>,
     chain: Chain,
     strategy: StrategyType,
@@ -54,7 +56,7 @@ impl PerplMarketMakingBot {
 
         Ok(Self {
             provider,
-            accounts: vec![wallet_address],
+            accounts: vec![types::AccountAddressOrID::Address(wallet_address)],
             instance,
             chain,
             strategy,
