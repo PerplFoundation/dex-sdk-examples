@@ -2,13 +2,13 @@ use std::sync::OnceLock;
 
 use crate::{Result, error::Error, strategies::Strategy};
 use alloy::providers::DynProvider;
-use dex_sdk::{
+use fastnum::UD64;
+use perpl_sdk::{
     abi::dex::Exchange::{ExchangeInstance, OrderDesc},
     error::DexError,
     state::{Exchange, Position, PositionType, StateEvents},
     types::{AccountId, OrderRequest, PerpetualId, RequestType},
 };
-use fastnum::UD64;
 use rand::{
     Rng,
     distr::{Bernoulli, Distribution, OpenClosed01},

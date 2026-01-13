@@ -1,4 +1,4 @@
-use dex_sdk::{error::DexError, types::PerpetualId};
+use perpl_sdk::{error::DexError, types::PerpetualId};
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {

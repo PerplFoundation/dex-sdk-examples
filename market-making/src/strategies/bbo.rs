@@ -1,12 +1,12 @@
 use crate::{Result, error::Error, strategies::Strategy};
 use alloy::providers::DynProvider;
-use dex_sdk::{
+use fastnum::{UD64, udec64};
+use perpl_sdk::{
     abi::dex::Exchange::{ExchangeInstance, OrderDesc},
     error::DexError,
     state::{Exchange, Order, OrderEventType, StateEvents},
     types::{AccountId, OrderRequest, PerpetualId, RequestType},
 };
-use fastnum::{UD64, udec64};
 use std::sync::OnceLock;
 use tokio::sync::{OwnedSemaphorePermit, mpsc};
 use tracing::{debug, error, info};
@@ -122,7 +122,7 @@ impl Strategy for BboStrategy {
         // This strategy only places one bid and one ask order at a time
         let bid = open_orders
             .iter()
-            .find(|o| o.r#type().side() == dex_sdk::types::OrderSide::Bid);
+            .find(|o| o.r#type().side() == perpl_sdk::types::OrderSide::Bid);
 
         let mut order_descs = Vec::new();
 
@@ -138,7 +138,7 @@ impl Strategy for BboStrategy {
 
         let ask = open_orders
             .iter()
-            .find(|o| o.r#type().side() == dex_sdk::types::OrderSide::Ask);
+            .find(|o| o.r#type().side() == perpl_sdk::types::OrderSide::Ask);
 
         if let Some(ask) = ask {
             if ask.price() > best_ask {
@@ -230,9 +230,11 @@ impl BboStrategy {
             .perpetuals()
             .get(&self.perpetual_id)
             .unwrap()
-            .orders()
+            .l3_book()
+            .all_orders()
             .values()
             .filter(|o| o.account_id() == *account_id)
+            .map(|o| &*(*o))
             .collect()
     }
 
@@ -242,8 +244,8 @@ impl BboStrategy {
             .get(&self.perpetual_id)
             .expect("perpetual must exist");
 
-        let best_bid_price = perpetual.l2_book().best_bid().map(|(price, _)| price);
-        let best_ask_price = perpetual.l2_book().best_ask().map(|(price, _)| price);
+        let best_bid_price = perpetual.l3_book().best_bid().map(|(price, _)| price);
+        let best_ask_price = perpetual.l3_book().best_ask().map(|(price, _)| price);
         (best_bid_price, best_ask_price)
     }
 

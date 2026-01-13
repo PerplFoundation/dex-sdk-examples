@@ -9,8 +9,11 @@ repository.workspace = true
 license.workspace = true
 
 [dependencies]
-dex-sdk = { workspace = true }
+alloy = { workspace = true }
+clap = { workspace = true }
+perpl-sdk = { workspace = true }
 fastnum = { workspace = true }
+futures = { workspace = true }
 tokio = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
@@ -18,3 +21,11 @@ tracing-subscriber = { workspace = true }
 [[bin]]
 name = "perpl_test_exchange"
 path = "src/test-exchange.rs"
+
+[[bin]]
+name = "print_trades"
+path = "src/print-trades.rs"
+
+[[bin]]
+name = "print_book"
+path = "src/print-book.rs"

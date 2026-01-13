@@ -3,7 +3,7 @@ use crate::{
     strategies::{bbo::BboStrategy, spread::SpreadStrategy, taker::TakerStrategy},
 };
 use alloy::providers::DynProvider;
-use dex_sdk::{
+use perpl_sdk::{
     abi::dex::Exchange::ExchangeInstance,
     error::DexError,
     state::{Exchange, StateEvents},
